@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Arcade</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent-color: #6200ea;
+            --accent-hover: #7c4dff;
+            --search-bg: #2c2c2c;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        /* Header & Search Section */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--accent-color), #b388ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            background-color: var(--search-bg);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            color: var(--text-main);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            background-color: #333;
+            box-shadow: 0 0 15px rgba(98, 0, 234, 0.3);
+        }
+
+        /* Game Grid */
+        main {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        #game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        /* Game Card */
+        .game-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-color);
+        }
+
+        .card-image-container {
+            width: 100%;
+            height: 180px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .game-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-icon-fallback {
+            font-size: 3rem;
+            color: var(--text-muted);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            /* Limit to 3 lines */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .play-btn {
+            align-self: flex-start;
+            padding: 0.5rem 1.2rem;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+
+        .game-card:hover .play-btn {
+            background-color: var(--accent-hover);
+        }
+
+        /* Empty State / Loading */
+        .status-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-top: 3rem;
+            grid-column: 1 / -1;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            #game-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Game Collection</h1>
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="Search for games...">
+        </div>
+    </header>
+
+    <main>
+        <div id="game-grid">
+            <!-- Games will be injected here via JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        // ==========================================
+        // CONFIGURATION
+        // ==========================================
+        
+      // The base URL where your games are hosted
+        const BASE_URL = "https://ansari-codes.github.io/games/";
+
+        // ==========================================
+        // APPLICATION LOGIC
+        // ==========================================
+
+        const gameGrid = document.getElementById('game-grid');
+        const searchInput = document.getElementById('search-input');
+        let allGames = [];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGames();
+            
+            // Add Event Listener for Search
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                filterGames(searchTerm);
+            });
+        });
+
+        /**
+         * Load games from JSON or Mock Data
+         */
+        async function loadGames() {
+            showLoading();
+
+            try {
+                // Attempt to fetch games.json
+                const response = await fetch('games.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                allGames = await response.json();
+                renderGames(allGames);
+            } catch (error) {
+                console.error("Error loading games:", error);
+                showError("Failed to load games. Check console or ensure games.json exists.");
+            }
+        }
+
+        /**
+         * Render the list of games to the DOM
+         */
+        function renderGames(games) {
+            gameGrid.innerHTML = ''; // Clear current content
+
+            if (games.length === 0) {
+                gameGrid.innerHTML = '<div class="status-message">No games found.</div>';
+                return;
+            }
+
+            games.forEach(game => {
+                const card = createGameCard(game);
+                gameGrid.appendChild(card);
+            });
+        }
+
+        /**
+         * Create a single HTML element for a game card
+         */
+        function createGameCard(game) {
+            const article = document.createElement('article');
+            article.className = 'game-card';
+            
+            // Construct the full URL: ansari-codes.github.io/games/GAME_FILE.html
+            // We assume game.path is just the filename based on prompt, but if it includes folders, we use it directly.
+            // Logic: The prompt says path is "GAME_FILE part", so we append it to BASE_URL.
+            const fullUrl = `${BASE_URL}${game.path}`;
+
+            // Handle Image (Icon)
+            let imageHtml;
+            if (game.icon) {
+                imageHtml = `<img src="${game.icon}" alt="${game.title}" class="card-image" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'card-icon-fallback\'>🎮</span>'">`;
+            } else {
+                // Fallback if no icon provided
+                imageHtml = `<span class="card-icon-fallback">🎮</span>`;
+            }
+
+            article.innerHTML = `
+                <a href="${fullUrl}" class="card-image-container">
+                    ${imageHtml}
+                </a>
+                <div class="card-content">
+                    <h2 class="card-title">${game.title}</h2>
+                    <p class="card-description">${game.description || "No description available."}</p>
+                    <div class="play-btn">Play Now &rarr;</div>
+                </div>
+            `;
+
+            // Make the whole card clickable (wrapping in anchor tag or handling click)
+            // Currently the image is wrapped in A, let's make the whole card an A tag or use JS to navigate.
+            // To keep semantics clean, let's wrap the content or make the whole article clickable.
+            // Simple approach: Click on article -> open link.
+            article.addEventListener('click', (e) => {
+                // Prevent default if clicking specific elements that shouldn't navigate (none in this simple design)
+                window.location.href = fullUrl;
+            });
+            // Remove the A tag from the image to avoid double wrapping, just let the click handler work
+            const imageContainer = article.querySelector('.card-image-container');
+            imageContainer.innerHTML = imageHtml; // reset to remove <a>
+            
+            return article;
+        }
+
+        /**
+         * Filter games based on search text
+         */
+        function filterGames(searchTerm) {
+            const filtered = allGames.filter(game => {
+                const titleMatch = game.title.toLowerCase().includes(searchTerm);
+                const descMatch = game.description ? game.description.toLowerCase().includes(searchTerm) : false;
+                return titleMatch || descMatch;
+            });
+            renderGames(filtered);
+        }
+
+        /**
+         * UI Helpers
+         */
+        function showLoading() {
+            gameGrid.innerHTML = `
+                <div class="status-message">
+                    <div class="spinner"></div>
+                    <p>Loading games...</p>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            gameGrid.innerHTML = `
+                <div class="status-message">
+                    <p style="color: #ff5252;">⚠️ ${message}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
