@@ -4,5 +4,11 @@
         "path": "games/Dino Jump.html",
         "description": "This is colorful and catchy version of Classic dino jumping game. You have three lives. Avoid obstacles and earn scores and save lives. Your high scores are preserved.",
         "icon": "thumbs/dino-jump-thumb.png"
+    },
+    {
+        "title": "Flappy Bird",
+        "path": "games/flappy-bird.html",
+        "description": "This is colorful and catchy version of Classic Flappy Bird game. Avoid obstacles by tapping and gliding. Your high scores are preserved.",
+        "icon": "thumbs/flappy-bird-thumb.png"
     }
 ]
