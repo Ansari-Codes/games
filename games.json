@@ -2,7 +2,7 @@
     {
         "title": "Dino Jump",
         "path": "Dino Jump.html",
-        "description": "This is colorful and catchy version of Classic dino jumping game. You have three lives. Avoid obstacles and earn scores. Your high scores are preserved.",
+        "description": "This is colorful and catchy version of Classic dino jumping game. You have three lives. Avoid obstacles and earn scores and save lives. Your high scores are preserved.",
         "icon": "thumbs/dino-jump-thumb.png"
     }
 ]
