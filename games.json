@@ -3,6 +3,6 @@
         "title": "Dino Jump",
         "path": "Dino Jump.html",
         "description": "This is colorful and catchy version of Classic dino jumping game. You have three lives. Avoid obstacles and earn scores. Your high scores are preserved.",
-        "icon": "https://picsum.photos/seed/memory/300/200"
+        "icon": "thumbs/dino-jump-thumb.png"
     }
 ]
