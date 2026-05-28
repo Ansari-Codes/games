@@ -12,7 +12,7 @@
         "icon": "thumbs/flappy-bird-thumb.png"
     },
     {
-        "title: "Pixel Knights",
+        "title": "Pixel Knights",
         "path": "games/pixel-knight.html",
         "description": "The Platform style game in which you can jump over the enemies and obstacles and pass out the levels. Try yourself now!",
         "icon": ""
